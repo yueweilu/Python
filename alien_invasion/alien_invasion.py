@@ -1,5 +1,5 @@
 import pygame
-
+from pygame.sprite import Group
 from settings import Settings
 from ship import Ship
 import game_functiion as gf
@@ -13,12 +13,16 @@ def run_game():
     #设置背景颜色
     bg_color = (230,230,230)
     #创建一艘飞船
-    ship = Ship(screen)
+    ship = Ship(ai_settings,screen)
+    #创建一个用于存储子弹的编组
+    bullets = Group()
 
     #开售游戏的住循环
     while True:
         #监听键盘和鼠标事件
-        gf.check_events(ship)
+        gf.check_events(ai_settings,screen,ship,bullets)
+        ship.update()
+        bullets.update()
+        gf.update_screen(ai_settings,screen,ship,bullets)
 
-        gf.update_screen(ai_settings,screen,ship)
 run_game()
