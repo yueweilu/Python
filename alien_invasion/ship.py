@@ -10,7 +10,9 @@ class Ship():
         #讲每搜飞船放到屏幕中央
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.screen_rect.bottom
+        #移动标志
+
     def blitme(self):
         '''在指定位置回执飞船'''
         self.screen.blit(self.image,self.rect)
-        '''测试'''
+        '''测试哈哈哈哈'''
