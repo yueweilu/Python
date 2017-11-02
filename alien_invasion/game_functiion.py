@@ -59,16 +59,16 @@ def update_bullets(bullets):
 def get_number_aliens_x(ai_settings,alien_width):
     '''计算每行可容纳多少个外星人'''
     available_space_x = ai_settings.screen_width - 2 * alien_width
-    number_alien_x = int(available_space_x / (2 * alien_width))
+    number_aliens_x = int(available_space_x / (2 * alien_width))
 
-    return  number_alien_x
+    return  number_aliens_x
 
 def create_alien(ai_settings,screen,aliens,alien_number):
     '''创建一群外星人并将其放在当前行'''
 
     alien = Alien(ai_settings,screen)
     alien_width = alien.rect.width
-    alien.x = alien.width + 2 * alien_width * alien_number
+    alien.x = alien_width + 2 * alien_width * alien_number
     alien.rect.x = alien.x
     aliens.add(alien)
 
