@@ -14,6 +14,7 @@ def run_game():
     bg_color = (230,230,230)
     #创建一艘飞船
     ship = Ship(ai_settings,screen)
+
     #创建一个用于存储子弹的编组
     bullets = Group()
 
@@ -23,6 +24,7 @@ def run_game():
         gf.check_events(ai_settings,screen,ship,bullets)
         ship.update()
         bullets.update()
-        gf.update_screen(ai_settings,screen,ship,bullets)
+        gf.update_bullets(bullets)
 
+        gf.update_screen(ai_settings,screen,ship,bullets)
 run_game()
