@@ -3,6 +3,7 @@ import pygame
 
 from bullet import Bullet
 from alien import Alien
+from time import sleep
 def check_events(ai_settings,screen,ship,bullets):
     '''响应按键和鼠标事件'''
     for event in pygame.event.get():
@@ -45,7 +46,7 @@ def update_screen(ai_settings,screen,ship,aliens,bullets):
     aliens.draw(screen)
     #让最近回执的屏幕可见
     pygame.display.flip()
-def update_bullets(bullets):
+def update_bullets(ai_settings,screen,ship,aliens,bullets):
     '''更新子弹的位置，并删除已消失的子弹'''
     #更新子弹的位置
     bullets.update()
@@ -55,10 +56,17 @@ def update_bullets(bullets):
         if bullet.rect.bottom <=0:
             bullets.remove(bullet)
     # print(len(bullets))
-def update_aliens(ai_settings,aliens):
+
+    check_bullet_alien_collision(ai_settings,screen,ship,aliens,bullets)
+
+def update_aliens(ai_settings,ship,aliens):
     ''''检查是否有外星人位于屏幕边缘，并更新整群外星人的位置'''
     check_fleet_edges(ai_settings,aliens)
     aliens.update()
+
+    #检测外星人和飞船之间的碰撞
+    if pygame.sprite.spritecollideany(ship,aliens):
+        print('ship hit !!!')
 
 def get_number_aliens_x(ai_settings,alien_width):
     '''计算每行可容纳多少个外星人'''
@@ -115,3 +123,39 @@ def change_fleet_direction(ai_settings,aliens):
     for alien in aliens.sprites():
         alien.rect.y += ai_settings.fleet_drop_speed
     ai_settings.fleet_direction *= -1
+
+def check_bullet_alien_collision(ai_settings,screen,ship,aliens,bullets):
+    '''响应子弹和外星人的碰撞'''
+    #删除发生碰撞的子弹和外星人
+    collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+
+    if len(aliens) == 0:
+        # 删除现有的子弹并新建一群外星人
+        bullets.empty()
+        creat_fleet(ai_settings, screen, ship, aliens)
+
+def ship_hit(ai_settings,stats,screen,ship,aliens,bullets):
+    '''响应被外星人撞到的飞船'''
+    #将ships——left 减 1
+    stats.ship_left -= 1
+
+    #清空外星人列表和子弹列表
+    aliens.empty()
+    bullets.empty()
+
+    #创建一群新的外星人，并将飞船放到屏幕底端中央
+
+    creat_fleet(ai_settings,screen,ship,aliens)
+    ship.center_ship()
+
+
+    #暂停
+    sleep(0.5)
+
+def update_aliens(ai_settings,stats,screen,ship,aliens,bullets):
+    #检测外星人和飞船碰撞
+    if pygame.sprite.spritecollideany(ship,aliens):
+        ship_hit(ai_settings,stats,screen,ship,aliens,bullets)
+
+
+
