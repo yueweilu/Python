@@ -34,7 +34,7 @@ def check_keyup_events(event,ship):
         ship.moving_right = False
     elif event.key == pygame.K_LEFT:
         ship.moving_left = False
-def update_screen(ai_settings,screen,ship,aliens,bullets):
+def update_screen(ai_settings,screen,stats,ship,aliens,bullets,play_button):
     '''更新屏幕上的图像，并切换到新屏幕'''
     #每次循环时都会重绘屏幕
     screen.fill(ai_settings.bg_color)
@@ -46,6 +46,13 @@ def update_screen(ai_settings,screen,ship,aliens,bullets):
     ship.blitme()
     aliens.draw(screen)
     #让最近回执的屏幕可见
+
+    #如果游戏处于非活跃状态，就绘制Play按钮
+    if not stats.game_active:
+        play_button.draw_button()
+
+
+
     pygame.display.flip()
     # gf.update_bullets(ai_settings,screen,ship,aliens,bullets)
 def update_bullets(ai_settings,screen,ship,aliens,bullets):
@@ -147,3 +154,4 @@ def ship_hit(ai_settings,stats,screen,ship,aliens,bullets):
         stats.game_cative = False
 def check_aliens_bottom(ai_settings,stats,screen,ship,aliens,bullets):
     '''检查是否有外星人到达屏幕底端'''
+    check_aliens_bottom(ai_settings,stats,screen,ship,aliens,bullets)

@@ -5,6 +5,7 @@ from ship import Ship
 # from alien import Alien
 import game_functiion as gf
 from game_stats import GameStats
+from button import Button
 
 def run_game():
     # 初始化游戏并创建一个屏幕对象
@@ -12,6 +13,10 @@ def run_game():
     ai_settings = Settings()
     screen = pygame.display.set_mode((ai_settings.screen_width,ai_settings.screen_height))
     pygame.display.set_caption("Alien Invasion")
+
+    #创建play按钮
+    play_button = Button(ai_settings,screen,"Play")
+
     #设置背景颜色
     bg_color = (230,230,230)
     #创建一艘飞船
@@ -41,5 +46,5 @@ def run_game():
             gf.update_bullets(ai_settings,screen,ship,aliens,bullets)
             gf.update_aliens(ai_settings,stats,screen,ship,aliens,bullets)
 
-        gf.update_screen(ai_settings,screen,ship,aliens,bullets)
+        gf.update_screen(ai_settings,screen,stats,ship,aliens,bullets,play_button)
 run_game()
