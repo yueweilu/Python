@@ -38,3 +38,13 @@ class Ship():
         '''在指定位置回执飞船'''
         self.screen.blit(self.image,self.rect)
         '''测试哈哈哈哈'''
+
+    def center_ship(self):
+        # 讲每搜飞船放到屏幕中央
+        self.rect.centerx = self.screen_rect.centerx
+        self.rect.bottom = self.screen_rect.bottom
+
+        # 在飞船的属性center中存储小数值
+        self.center = float(self.rect.centerx)
+
+
