@@ -47,7 +47,8 @@ def update_screen(ai_settings,screen,ship,aliens,bullets):
     aliens.draw(screen)
     #让最近回执的屏幕可见
     pygame.display.flip()
-def update_bullets(aliens,bullets):
+    # gf.update_bullets(ai_settings,screen,ship,aliens,bullets)
+def update_bullets(ai_settings,screen,ship,aliens,bullets):
     '''更新子弹的位置，并删除已消失的子弹'''
     #更新子弹的位置
     bullets.update()
@@ -126,6 +127,7 @@ def change_fleet_direction(ai_settings,aliens):
 
 def ship_hit(ai_settings,stats,screen,ship,aliens,bullets):
     '''响应外星人撞到的飞船'''
+
     #将ships_left减1
     stats.ships_left -=1
     #清空外星人列表和子弹列表
@@ -135,8 +137,13 @@ def ship_hit(ai_settings,stats,screen,ship,aliens,bullets):
     #创建一群新的外星人，并将飞船放到屏底端中央
     creat_fleet(ai_settings,screen,ship,aliens)
     ship.center_ship()
+    if stats.ships_left > 0:
+        # 将ships_left 减1
+        stats.ships_left -= 1
 
     #暂停
-    sleep(0.5)
+        sleep(0.5)
+    else:
+        stats.game_cative = False
 def check_aliens_bottom(ai_settings,stats,screen,ship,aliens,bullets):
     '''检查是否有外星人到达屏幕底端'''
